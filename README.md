@@ -13,7 +13,7 @@ csv file to xls
     obj = Excel(font_name='xx', bold=True)
     
   2, 将csv写到xls文件里
-    obj.csv_to_xls(save_path, filename, csvfile=[])
+    obj.csv_to_xls(save_path, filename, csvfile=[])<br/>
     参数说明：<br/>
     save_path为生成的xls文件存放的目录, 如果该目录不存在，则会自动创建该目录。<br/>
     filename为生成的xls文件的名字, 最后生成的xls文件的路径为 save_path + filename。<br/>

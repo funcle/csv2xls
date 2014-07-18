@@ -6,23 +6,18 @@ import xlwt
 
 class Excel(object):
 
-    def __init__(self, font_name='Times New Roman', bold=False):
-        self.font_name = font_name
-        self.bold = bold
+    def __init__(self, **kwargs):
+        self.create_font(**kwargs)
+        self.create_style()
         self.create_wb()
+    
+    def create_font(self, **kwargs):
+        self.font = xlwt.Font()
+        self.font.__dict__.update(kwargs)
 
-    @property
-    def font(self):
-        font = xlwt.Font()
-        font.name = self.font_name
-        font.bold = self.bold
-        return font
-
-    @property
-    def style(self):
-        style = xlwt.XFStyle()
-        style.font = self.font
-        return style
+    def create_style(self):
+        self.style = xlwt.XFStyle()
+        self.style.font = self.font
 
     def create_wb(self):
         self.wb = xlwt.Workbook()
@@ -54,11 +49,12 @@ class Excel(object):
                 for rindex, line in enumerate(f.readlines()):
                     row = line.strip().split(",")
                     for cindex, cn in enumerate(row):
-                        ws.write(rindex, cindex, cn)
+                        ws.write(rindex, cindex, cn, self.style)
         
         self.wb.save(file_path)
 
 if __name__ == '__main__':
-    obj = Excel()
+    di = dict(shadow=False, bold=False, name="Arial", height=240)
+    obj = Excel(**di)
     files = ["/Users/ZJN/other/a.csv", "/Users/ZJN/other/b.csv"]
-    obj.csv_to_xls('/Users/ZJN/other', 'new1.xls', csvfile=files)
+    obj.csv_to_xls('/Users/ZJN/other', 'new4.xls', csvfile=files)
